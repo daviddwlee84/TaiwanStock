@@ -1,0 +1,4 @@
+streamlit
+# get better performance for streamlit
+watchdog
+pandas

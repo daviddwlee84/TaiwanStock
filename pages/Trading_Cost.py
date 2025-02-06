@@ -2,6 +2,7 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 
+st.set_page_config(page_title="Trading Cost", layout="centered")
 st.title("TWSE Trading Cost")
 
 """
@@ -45,7 +46,15 @@ trading_cost = original_commission * commission_discount * 2 + tax
 
 f"""
 $$
-p \\times (({original_commission * 100:.4f}\\% \\times {commission_discount}) \\times 2 + {tax * 100:.2f}\\%) = p \\times {trading_cost * 100:.4f}\\%
+c_{{buy}} = p \\times ({original_commission * 100:.4f}\\% \\times {commission_discount}) = p \\times {original_commission * commission_discount * 100:.4f}\\%
+$$
+
+$$
+c_{{sell}} = p \\times (({original_commission * 100:.4f}\\% \\times {commission_discount}) + {tax * 100:.2f}\\%)) = p \\times {(original_commission * commission_discount + tax) * 100:.4f}\\%
+$$
+
+$$
+c_{{total}} = p \\times (({original_commission * 100:.4f}\\% \\times {commission_discount}) \\times 2 + {tax * 100:.2f}\\%) = p \\times {trading_cost * 100:.4f}\\%
 $$
 """
 

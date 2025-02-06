@@ -2,7 +2,7 @@ import streamlit as st
 from twse_openapi import TwseOpenApi
 import plotly.express as px
 
-st.set_page_config(page_title="TWSE OpenAPI", layout="wide")
+st.set_page_config(page_title="TWSE OpenAPI", layout="centered")
 st.title("TWSE OpenAPI")
 
 twse_api = TwseOpenApi()

@@ -4,7 +4,11 @@ from typing import List, Dict, Optional
 
 
 class TwseOpenApi:
-    def __init__(self, base_url: str = "https://openapi.twse.com.tw/v1/") -> None:
+    def __init__(
+        self,
+        base_url: str = "https://openapi.twse.com.tw/v1/",
+        return_raw: bool = False,
+    ) -> None:
         """
         Initialize the TwseOpenApi object with a base_url.
 
@@ -14,6 +18,7 @@ class TwseOpenApi:
             The base URL for the TWSE OpenAPI (default is "https://openapi.twse.com.tw/v1/").
         """
         self.base_url: str = base_url
+        self.return_raw: bool = return_raw
 
     @staticmethod
     def parse_taiwanese_date(taiwan_date: str) -> Optional[pd.Timestamp]:
@@ -120,6 +125,9 @@ class TwseOpenApi:
         """
         df = pd.DataFrame(data)
 
+        if self.return_raw:
+            return df
+
         # Replace "--" with NaN across the entire DataFrame
         df = df.replace("--", pd.NA)
 
@@ -144,9 +152,7 @@ class TwseOpenApi:
 
         return df
 
-    def get_industry_eps_stat_info(
-        self,
-    ) -> Optional[pd.DataFrame]:
+    def get_industry_eps_stat_info(self) -> Optional[pd.DataFrame]:
         """
         取得「上市公司各產業EPS統計資訊」
 

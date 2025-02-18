@@ -12,3 +12,8 @@ Projects
 
 - [Data Streaming Project: TWSE Stock | 蔡亦凱 的作品集](https://www.cake.me/portfolios/data-streaming-project-twse-stock?locale=zh-TW)
   - [billtsai1518/data-streaming-tw-stock](https://github.com/billtsai1518/data-streaming-tw-stock)
+
+Tools
+
+- [財報狗-穩健的報酬，更悠閒的生活](https://statementdog.com/)
+- [nStock - 最新台股價格、財報、新聞與選股APP](https://shop.nstock.tw/)

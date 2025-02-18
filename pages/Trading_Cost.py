@@ -62,9 +62,15 @@ st.caption(f"(i.e. Trading Cost equals {trading_cost * 10000} bps)")
 
 
 # --------------- 1. 基本參數設定 ---------------
-min_price = 1  # 模擬的最小股價
-max_price = 2000  # 模擬的最大股價
-num_points = 2000  # 在區間內取多少個點
+with st.expander("Plot Configure"):
+    min_price = st.number_input("Min Price", value=1, step=1, help="模擬的最小股價")
+    max_price = st.number_input("Max Price", value=4000, step=1, help="模擬的最大股價")
+    num_points = st.number_input(
+        "Number of Points", value=max_price, step=1, help="在區間內取多少個點"
+    )
+    shares = st.number_input(
+        "Shares", value=1000, step=100, help="每次交易的股數 (1張 = 1000股)"
+    )
 
 prices = np.linspace(min_price, max_price, num_points)
 
@@ -130,9 +136,7 @@ for p in prices:
 
     # (b) 交易總成本 (買 + 賣) => 以 1 張(1000股) 總成本換算成對股價(1股)的 bps
     cost_twd = total_transaction_cost_twd(
-        p,
-        commission=commission,
-        tax=tax,
+        p, commission=commission, tax=tax, shares=shares
     )
     # 1張的整體交易金額 = p * 1000；轉成與"1股股價"相對的bps => 除以 (p * 1000) 再乘以 10,000
     cost_bps = (cost_twd / (p * 1000)) * 10000
@@ -165,6 +169,20 @@ for v in vertical_lines:
         )
     )
 
+# 水平虛線
+horizontal_lines = [10, 50]
+for v in horizontal_lines:
+    fig.add_shape(
+        type="line",
+        x0=min_price,
+        x1=max_price,
+        y0=v,
+        y1=v,
+        line=dict(color="gray", dash="dot"),
+        xref="x",
+        yref="y",
+    )
+
 # 設定圖表
 fig.update_layout(
     title="台股「每檔跳價」vs「總交易成本」(bps) 曲線",
@@ -186,7 +204,7 @@ for p in prices:
     tick_values.append(tick_val)
 
     # 買+賣一次交易的總成本 (TWD)
-    cost = total_transaction_cost_twd(p, commission=commission, tax=tax)
+    cost = total_transaction_cost_twd(p, commission=commission, tax=tax, shares=shares)
     trans_costs.append(cost)
 
 # ============= 5. 繪圖 =============
